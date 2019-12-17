@@ -1,34 +1,41 @@
 package objectyl.student.service;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.io.Serializable;
+import java.util.Date;
 import java.util.UUID;
 
-public class Student {
+@Entity
+@Table(name = "students")
+public class Student implements Serializable {
 
-	private long id;
-	private String name;
-	private String surname;
+    @Id
+    @Column(name = "id")
+    public UUID id;
 
-	public long getId() {
-		return id;
-	}
+    @Column(name = "first_name")
+    public String firstName;
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    @Column(name = "last_name")
+    public String lastName;
 
-	public String getName() {
-		return name;
-	}
+    @Column(name = "gender")
+    public String gender;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    @Column(name = "date_of_birth")
+    public Date dateOfBirth;
 
-	public String getSurname() {
-		return surname;
-	}
+    @Column(name = "register_date")
+    public Date registerDate;
 
-	public void setSurname(String surname) {
-		this.surname = surname;
-	}
+    @Column(name = "address")
+    public String address;
+
+    @Column(name = "mobile_number")
+    public String mobileNumber;
+
+
 }

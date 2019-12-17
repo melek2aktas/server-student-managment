@@ -1,17 +1,19 @@
 package objectyl.student.service;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
 @CrossOrigin
 public class GreetingController {
+
+	@Autowired
+	private StudentRepository studentRepository;
 
 	private static final String template = "Hello, %s!";
 	private final AtomicLong counter = new AtomicLong();
@@ -26,23 +28,34 @@ public class GreetingController {
 
 		List<Student> studentList = new ArrayList<>();
 
-		Student student = new Student();
-
-		student.setId(1);
-		student.setName("John");
-		student.setSurname("Demir");
-
-		studentList.add(student);
-
-		Student student2 = new Student();
-		student2.setId(2);
-		student2.setName("Elif");
-		student2.setSurname("Demir");
-
-		studentList.add(student2);
+		studentList = studentRepository.findAll();
 
 		return studentList;
 
+	}
+
+	@RequestMapping("/create")
+	public Student createStudent() {
+
+		Student student = new Student();
+
+		student.id = UUID.randomUUID();
+		student.firstName = "Mark";
+		student.lastName = "Jorge";
+		student.address = "London";
+
+		studentRepository.save(student);
+
+		return student;
+
+	}
+
+	@RequestMapping("/delete/{id}")
+	public String deleteStudent(@PathVariable("id") UUID id) {
+
+		studentRepository.deleteById(id);
+
+		return "Student deleted";
 
 	}
 }
