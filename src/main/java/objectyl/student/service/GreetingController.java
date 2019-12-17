@@ -26,6 +26,8 @@ public class GreetingController {
 	@RequestMapping("/students")
 	public List<Student> getStudents() {
 
+
+
 		List<Student> studentList = new ArrayList<>();
 
 		studentList = studentRepository.findAll();
